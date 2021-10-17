@@ -126,3 +126,5 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #User model for authentication purposes
 AUTH_USER_MODEL = 'microblogs.User'
+
+AUTH_POST_MODEL = 'microblogs.Post'
