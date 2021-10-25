@@ -46,6 +46,9 @@ def sign_up(request):
     return render(request, "sign_up.html", {'form': form})
 
 def user_list(request):
-
     users = User.objects.all()
     return render(request, "user_list.html", {'list': users})
+
+def show_user(request, user_id):
+    user = User.objects.get(username=user_id)
+    return render(request, "show_user.html", {'user': user})

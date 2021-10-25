@@ -7,7 +7,7 @@
   <p>list of users</p>
   <ul>
     {% for user in list %}
-      <li>{{ user|safe }}</li>
+      <p><a href = '{% url 'show_user' user %}'>{{user}}</a></p>
     {% endfor %}
   </ul>
 </body>
