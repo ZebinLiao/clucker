@@ -3,13 +3,15 @@ from django.http import HttpResponse
 from .forms import SignUpForm
 from django.shortcuts import redirect, render
 from .forms import PostForm
+from .forms import LogInForm
 
 def feed(request):
     form = PostForm()
     return render(request, 'feed.html', {'form': form})
 
 def log_in(request):
-    return render(request, 'log_in.html')
+    form = LogInForm()
+    return render(request, 'log_in.html', {'form': form})
 
 def home(request):
     return render(request, "home.html")
