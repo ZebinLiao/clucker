@@ -6,6 +6,7 @@ from .forms import PostForm
 from .forms import LogInForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from .models import User
 
 def feed(request):
     form = PostForm()
@@ -43,3 +44,8 @@ def sign_up(request):
     else:
         form = SignUpForm()
     return render(request, "sign_up.html", {'form': form})
+
+def user_list(request):
+
+    users = User.objects.all()
+    return render(request, "user_list.html", {'list': users})

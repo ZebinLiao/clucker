@@ -1,0 +1,14 @@
+<html>
+<head>
+  <title>Clucker</title>
+</head>
+<body>
+  <h1>Clucker</h1>
+  <p>list of users</p>
+  <ul>
+    {% for user in list %}
+      <li>{{ user|safe }}</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
