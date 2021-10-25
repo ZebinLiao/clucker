@@ -5,6 +5,7 @@ from django.shortcuts import redirect, render
 from .forms import PostForm
 from .forms import LogInForm
 from django.contrib.auth import authenticate,login
+from django.contrib import messages
 
 def feed(request):
     form = PostForm()
@@ -20,6 +21,7 @@ def log_in(request):
             if user is not None:
                 login(request, user)
                 return redirect('feed')
+        messages.add_message(request, messages.ERROR, "The credentials provided were invalid!")
     form = LogInForm()
     return render(request, 'log_in.html', {'form': form})
 
