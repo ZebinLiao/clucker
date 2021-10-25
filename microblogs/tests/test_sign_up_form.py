@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+from django.contrib.auth.hashers import check_password
 from django.test import TestCase
 from microblogs.models import User
 from microblogs.forms import SignUpForm
@@ -12,7 +13,7 @@ class SignUpFormTestCase(TestCase):
             'last_name':'Doe',
             'username':'@janedoe',
             'email':'janedoe@example.org',
-            'bio':'New Bio',
+            'bio':'My bio',
             'new_password':'Password123',
             'password_confirmation':'Password123'
         }
@@ -64,3 +65,17 @@ class SignUpFormTestCase(TestCase):
         self.form_input['password_confirmation'] = 'Wrongpassword123'
         form = SignUpForm(data=self.form_input)
         self.assertFalse(form.is_valid())
+
+    def test_form_must_save_correctly(self):
+        form = SignUpForm(data=self.form_input)
+        before_count = User.objects.count()
+        form.save()
+        after_count = User.objects.count()
+        self.assertEqual(after_count, before_count+1)
+        user = User.objects.get(username='@janedoe')
+        self.assertEqual(user.first_name, 'Jane')
+        self.assertEqual(user.last_name, 'Doe')
+        self.assertEqual(user.email, 'janedoe@example.org')
+        self.assertEqual(user.bio, 'My bio')
+        is_password_correct = check_password('Password123', user.password)
+        self.assertTrue(is_password_correct)

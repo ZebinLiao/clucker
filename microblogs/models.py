@@ -37,7 +37,7 @@ class User(AbstractUser):
         max_length = 520,
     )
 
-class post(models.Model):
+class Post(models.Model):
     author = models.ForeignKey(
         'User',
         on_delete = models.CASCADE,
