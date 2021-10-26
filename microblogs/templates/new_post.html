@@ -1,0 +1,14 @@
+<html>
+<head>
+  <title>Clucker</title>
+</head>
+<body>
+  <h1>Clucker</h1>
+  <p>make new post here</p>
+  <form action = "{% url 'new_post' %}" method = 'post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Post">
+  </form>
+</body>
+</html>

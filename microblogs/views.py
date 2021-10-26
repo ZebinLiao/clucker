@@ -9,8 +9,7 @@ from django.contrib import messages
 from .models import User
 
 def feed(request):
-    form = PostForm()
-    return render(request, 'feed.html', {'form': form})
+    return render(request, 'feed.html')
 
 def log_in(request):
     if request.method == 'POST':
@@ -52,3 +51,16 @@ def user_list(request):
 def show_user(request, user_id):
     user = User.objects.get(username=user_id)
     return render(request, "show_user.html", {'user': user})
+
+def new_post(request):
+    form = PostForm()
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            form = PostForm(request.POST)
+            post = form.save(False)
+            user = request.user
+            post.author = user
+            if form.is_valid():
+                form.save()
+
+    return render(request, "new_post.html", {'form': form})
