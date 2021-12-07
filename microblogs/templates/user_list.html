@@ -1,14 +1,22 @@
-<html>
-<head>
-  <title>Clucker</title>
-</head>
-<body>
-  <h1>Clucker</h1>
-  <p>list of users</p>
-  <ul>
-    {% for user in list %}
-      <p><a href = '{% url 'show_user' user %}'>{{user}}</a></p>
-    {% endfor %}
-  </ul>
-</body>
-</html>
+{% extends 'base_content.html' %}
+{% block title %}
+| Users
+{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1>Clucker</h1>
+        <p>list of users</p>
+          <ul>
+            {% for user in list %}
+            <p>
+              <img src="{{ user.mini_gravatar }}" alt="Gravatar of {{ user.username }}" class="rounded-circle" >
+            </p>
+              <p><a href = '{% url 'show_user' user %}'>{{user}}</a></p>
+            {% endfor %}
+          </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,14 +1,18 @@
-<html>
-<head>
-  <title>Clucker</title>
-</head>
-<body>
-  <h1>Clucker</h1>
-  <p>make new post here</p>
-  <form action = "{% url 'new_post' %}" method = 'post'>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Post">
-  </form>
-</body>
-</html>
+{% extends 'base_content.html' %}
+{% block title %}
+| New post
+{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-lg-6 col-xl-4">
+      <p>make new post here</p>
+      <form action = "{% url 'new_post' %}" method = 'post'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Post">
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

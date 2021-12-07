@@ -7,6 +7,8 @@ from .forms import LogInForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import User
+from .models import Post
+
 
 def feed(request):
     return render(request, 'feed.html')
@@ -57,10 +59,30 @@ def new_post(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
             form = PostForm(request.POST)
-            post = form.save(False)
-            user = request.user
-            post.author = user
+            # post = form.save(False)
+            current_user = request.user
             if form.is_valid():
-                form.save()
-
+                text = form.cleaned_data.get('text')
+                post = Post.objects.create(author=current_user, text=text)
+                return redirect('feed')
+            else:
+                return render(request, 'feed.html', {'form': form})
+        else:
+            return redirect('log_in')
     return render(request, "new_post.html", {'form': form})
+
+# def new_post(request):
+#     if request.method == 'POST':
+#         if request.user.is_authenticated:
+#             current_user = request.user
+#             form = PostForm(request.POST)
+#             if form.is_valid():
+#                 text = form.cleaned_data.get('text')
+#                 post = Post.objects.create(author=current_user, text=text)
+#                 return redirect('feed')
+#             else:
+#                 return render(request, 'feed.html', {'form': form})
+#         else:
+#             return redirect('log_in')
+#     else:
+#         return HttpResponseForbidden()
